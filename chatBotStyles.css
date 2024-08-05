@@ -1,0 +1,323 @@
+/* Copy the CSS code from CodePen */
+
+
+
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css');
+
+/* Your SCSS converted to CSS */
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin ball {
+    @include center;
+    content: "";
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 2;
+    margin-top: 4px;
+    animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+}
+
+/*--------------------
+  Body
+  --------------------*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* body {
+    background: linear-gradient(135deg, #044f48, #2a7561);
+    background-size: cover;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    line-height: 1.3;
+    overflow: hidden;
+} */
+
+.bg {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: url("https://www.pikpng.com/pngl/b/109-1099794_ios-emoji-emoji-iphone-ios-heart-hearts-spin.png") no-repeat 0 0;
+    filter: blur(80px);
+    transform: scale(1.2);
+
+}
+
+/*--------------------
+  Chat
+  --------------------*/
+.chat {
+    @include center;
+    position: fixed;
+    /* Change from absolute to fixed */
+    bottom: 20px;
+    /* Adjust as necessary to position it slightly above the bottom */
+    right: 20px;
+    /* Adjust as necessary to position it slightly to the left of the right edge */
+    width: 300px;
+    height: 80vh;
+    max-height: 500px;
+    z-index: 2;
+    overflow: hidden;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #044f48, #2a7561);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2;
+}
+
+/*--------------------
+  Chat Title
+  --------------------*/
+.chat-title {
+    flex: 0 1 45px;
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px 10px 10px 50px;
+
+    h1,
+    h2 {
+        font-weight: normal;
+        font-size: 10px;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .avatar {
+        position: absolute;
+        z-index: 1;
+        top: 8px;
+        left: 9px;
+        border-radius: 30px;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        border: 2px solid rgba(255, 255, 255, 0.24);
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+/*--------------------
+  Messages
+  --------------------*/
+.messages {
+    flex: 1 1 auto;
+    color: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    & .messages-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 101%;
+        width: 100%;
+        padding: 5px;
+
+    }
+
+    .message {
+        clear: both;
+        float: left;
+        padding: 6px 10px 7px;
+        border-radius: 10px 10px 10px 0;
+        background: rgba(0, 0, 0, 0.3);
+        margin: 8px 0;
+        font-size: 11px;
+        line-height: 1.4;
+        margin-left: 35px;
+        position: relative;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+
+        .timestamp {
+            position: absolute;
+            bottom: -15px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            border-top: 6px solid rgba(0, 0, 0, 0.3);
+            left: 0;
+            border-right: 7px solid transparent;
+        }
+
+        .avatar {
+            position: absolute;
+            z-index: 1;
+            bottom: -15px;
+            left: -35px;
+            border-radius: 30px;
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            border: 2px solid rgba(255, 255, 255, 0.24);
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        &.message-personal {
+            float: right;
+            color: #fff;
+            text-align: right;
+            background: linear-gradient(120deg, #248a52, #257287);
+            border-radius: 10px 10px 0 10px;
+
+            &::before {
+                left: auto;
+                right: 0;
+                border-right: none;
+                border-left: 5px solid transparent;
+                border-top: 4px solid #257287;
+                bottom: -4px;
+            }
+        }
+
+        &:last-child {
+            margin-bottom: 30px;
+        }
+
+        &.new {
+            animation: bounce 0.11s ease;
+        }
+
+        &.loading {
+            &::before {
+                border-top: none;
+            }
+
+            span {
+                &::before {
+                    @include ball;
+                    animation-delay: 0.1s;
+                }
+
+                &::after {
+                    @include ball;
+                    animation-delay: 0.3s;
+                }
+            }
+        }
+    }
+}
+
+/*--------------------
+  Message Box
+  --------------------*/
+.message-box {
+    flex: 0 1 55px;
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -30px;
+        left: 0;
+        height: 30px;
+        width: 100%;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .message-input {
+        flex: 1;
+        margin: 10px;
+        border: none;
+        background: none;
+        color: #fff;
+        outline: none;
+        font-family: "Open Sans", sans-serif;
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    .message-submit {
+        border: none;
+        background: #257287;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 10px;
+        margin-right: 10px;
+        outline: none;
+        cursor: pointer;
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes ball {
+    to {
+        transform: translateY(-6px);
+    }
+}
